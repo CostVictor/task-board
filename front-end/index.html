@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskBoard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div>
+        <h1>TaskBoard</h1>
+        <p class="subtitle">Organize suas tarefas em um quadro Kanban</p>
+      </div>
+      <div class="header-actions">
+        <label for="projectFilter">Projeto:</label>
+        <select id="projectFilter">
+          <option value="">Todos</option>
+        </select>
+      </div>
+    </header>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="projects-section">
+      <div class="section-header">
+        <h2>Projetos</h2>
+      </div>
+      <div class="projects-grid" id="projectsGrid"></div>
+      <form id="projectForm" class="inline-form">
+        <input type="text" id="projectName" placeholder="Nome do projeto" required />
+        <input type="text" id="projectDescription" placeholder="Descrição (opcional)" />
+        <button type="submit">Criar projeto</button>
+      </form>
+    </section>
+
+    <main class="board">
+      <div class="column" data-status="todo">
+        <h2>A Fazer</h2>
+        <div class="column-content" id="column-todo"></div>
+      </div>
+      <div class="column" data-status="doing">
+        <h2>Fazendo</h2>
+        <div class="column-content" id="column-doing"></div>
+      </div>
+      <div class="column" data-status="done">
+        <h2>Concluído</h2>
+        <div class="column-content" id="column-done"></div>
+      </div>
+    </main>
+
+    <section class="new-task">
+      <h2>Nova tarefa</h2>
+      <form id="taskForm">
+        <input type="text" id="taskTitle" placeholder="Título da tarefa" required />
+        <input type="text" id="taskDescription" placeholder="Descrição (opcional)" />
+        <select id="taskProject" required></select>
+        <select id="taskPriority">
+          <option value="low">Baixa</option>
+          <option value="medium" selected>Média</option>
+          <option value="high">Alta</option>
+        </select>
+        <button type="submit">Criar tarefa</button>
+      </form>
+    </section>
+
+    <div class="toast" id="toast"></div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

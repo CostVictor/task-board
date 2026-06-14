@@ -1,0 +1,39 @@
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &-primary {
+    background: #2563eb;
+    color: #fff;
+
+    &:hover {
+      background: #1d4ed8;
+    }
+  }
+
+  &-secondary {
+    background: #e2e8f0;
+    color: #475569;
+
+    &:hover {
+      background: #cbd5e1;
+    }
+  }
+
+  &-delete {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #94a3b8;
+    cursor: pointer;
+    line-height: 1;
+
+    &:hover {
+      color: #ef4444;
+    }
+  }
+}

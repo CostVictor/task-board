@@ -1,0 +1,40 @@
+.new-task,
+.projects-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.projects-section {
+  margin-bottom: 32px;
+
+  .section-header {
+    margin-bottom: 16px;
+
+    h2 {
+      font-size: 1.125rem;
+    }
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+}
+
+.new-task {
+  h2 {
+    font-size: 1.125rem;
+    margin-bottom: 16px;
+  }
+}
+
+.empty-desc {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin-bottom: 12px;
+}
