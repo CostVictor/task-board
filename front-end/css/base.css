@@ -1,3 +1,21 @@
+:root {
+  --bg-main: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-muted: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --sidebar-bg: #1e293b;
+  --sidebar-border: #334155;
+  --sidebar-text: #e2e8f0;
+  --sidebar-muted: #94a3b8;
+  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-active: #2563eb;
+  --sidebar-input-bg: #0f172a;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,11 +23,11 @@
 }
 
 body {
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: #f0f2f5;
-  color: #1a1a2e;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
   min-height: 100vh;
-  padding: 24px;
+  line-height: 1.5;
 }
 
 select,
@@ -21,7 +39,19 @@ button {
 select,
 input {
   padding: 8px 12px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: border-color 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
 }

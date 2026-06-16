@@ -1,10 +1,10 @@
 @import url("css/base.css");
-@import url("css/header.css");
+@import url("css/layout.css");
+@import url("css/sidebar.css");
 @import url("css/stats.css");
 @import url("css/board.css");
 @import url("css/card.css");
 @import url("css/buttons.css");
-@import url("css/projects.css");
 @import url("css/forms.css");
 @import url("css/toast.css");
 @import url("css/utilities.css");

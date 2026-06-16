@@ -5,23 +5,28 @@ import {
   startEditProject,
   cancelEditProject,
   saveProject,
-} from "./project.js";
-import { loadTasks, createTask, moveTask, deleteTask } from "./task.js";
+  selectProject,
+  initSidebar,
+} from "./js/project.js";
+import { createTask, moveTask, deleteTask } from "./js/task.js";
 
 window.deleteProject = deleteProject;
 window.startEditProject = startEditProject;
 window.cancelEditProject = cancelEditProject;
 window.saveProject = saveProject;
+window.selectProject = selectProject;
 window.moveTask = moveTask;
 window.deleteTask = deleteTask;
 
-document.getElementById("projectFilter").addEventListener("change", loadTasks);
 document.getElementById("taskForm").addEventListener("submit", createTask);
-document.getElementById("projectForm").addEventListener("submit", createProject);
+document
+  .getElementById("projectForm")
+  .addEventListener("submit", createProject);
+
+initSidebar();
 
 async function init() {
   await loadProjects();
-  await loadTasks();
 }
 
 init();

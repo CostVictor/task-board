@@ -1,9 +1,14 @@
 .card {
-  background: #fff;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 14px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   border-left: 4px solid #94a3b8;
+  transition: box-shadow 0.15s;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
 
   &.priority-high {
     border-left-color: #ef4444;
@@ -17,10 +22,6 @@
     border-left-color: #94a3b8;
   }
 
-  &.project-card {
-    border-left-color: #2563eb;
-  }
-
   h3 {
     font-size: 1rem;
     margin-bottom: 6px;
@@ -28,15 +29,8 @@
 
   p {
     font-size: 0.875rem;
-    color: #64748b;
+    color: var(--text-secondary);
     margin-bottom: 8px;
-  }
-
-  small {
-    display: block;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    margin-bottom: 12px;
   }
 
   &-header {
@@ -75,8 +69,4 @@
     color: #64748b;
   }
 
-  &.project-badge {
-    background: #dbeafe;
-    color: #1d4ed8;
-  }
 }

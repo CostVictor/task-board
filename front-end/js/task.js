@@ -1,15 +1,22 @@
-import { API_URL, STATUS_LABELS, PRIORITY_LABELS, STATUS_FLOW } from "./config.js";
+import {
+  API_URL,
+  STATUS_LABELS,
+  PRIORITY_LABELS,
+  STATUS_FLOW,
+} from "./config.js";
 import { state } from "./state.js";
 import { showToast } from "./utils.js";
+import { loadProjects } from "./project.js";
+
+// -- LOAD
 
 export async function loadTasks() {
-  const projectId = document.getElementById("projectFilter").value;
-  let url = `${API_URL}/tasks`;
-
-  if (projectId) {
-    url += `?project_id=${projectId}`;
+  if (!state.selectedProjectId) {
+    state.tasks = [];
+    return;
   }
 
+  const url = `${API_URL}/tasks?project_id=${state.selectedProjectId}`;
   const response = await fetch(url);
   state.tasks = await response.json();
 
@@ -27,9 +34,11 @@ function renderStats() {
   document.getElementById("stats").innerHTML = `
     <span class="stat stat-todo">${counts.todo} a fazer</span>
     <span class="stat stat-doing">${counts.doing} fazendo</span>
-    <span class="stat stat-done">${counts.done} concluidas</span>
+    <span class="stat stat-done">${counts.done} concluídas</span>
   `;
 }
+
+// -- RENDER
 
 function renderBoard() {
   const columns = {
@@ -54,6 +63,8 @@ function renderBoard() {
   }
 }
 
+// -- ACTIONS
+
 function createTaskCard(task) {
   const card = document.createElement("article");
   card.classList.add("card", `priority-${task.priority}`);
@@ -76,7 +87,6 @@ function createTaskCard(task) {
     </div>
     <h3>${task.title}</h3>
     ${task.description ? `<p>${task.description}</p>` : ""}
-    <small>${task.project_name}</small>
     <div class="card-actions">${actions}</div>
   `;
 
@@ -96,6 +106,7 @@ export async function moveTask(id, status) {
   }
 
   showToast(`Tarefa movida para ${STATUS_LABELS[status]}`);
+  await loadProjects();
   await loadTasks();
 }
 
@@ -111,16 +122,22 @@ export async function deleteTask(id) {
     return;
   }
 
-  showToast("Tarefa excluida");
+  showToast("Tarefa excluída");
+  await loadProjects();
   await loadTasks();
 }
 
 export async function createTask(event) {
   event.preventDefault();
 
+  if (!state.selectedProjectId) {
+    showToast("Selecione um projeto primeiro");
+    return;
+  }
+
   const title = document.getElementById("taskTitle").value.trim();
   const description = document.getElementById("taskDescription").value.trim();
-  const project_id = Number(document.getElementById("taskProject").value);
+  const project_id = state.selectedProjectId;
   const priority = document.getElementById("taskPriority").value;
 
   const response = await fetch(`${API_URL}/tasks`, {
@@ -138,5 +155,6 @@ export async function createTask(event) {
   document.getElementById("taskPriority").value = "medium";
 
   showToast("Tarefa criada");
+  await loadProjects();
   await loadTasks();
 }
