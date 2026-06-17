@@ -1,9 +1,9 @@
 .toast {
   position: fixed;
   z-index: 200;
-  inset-inline: 1rem;
-  bottom: max(1rem, env(safe-area-inset-bottom));
-  width: auto;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
   max-width: 24rem;
   margin-inline: auto;
   padding: 0.75rem 1rem;
@@ -11,15 +11,11 @@
   color: var(--sidebar-text);
   border-radius: 0.5rem;
   font-size: 0.875rem;
-  line-height: 1.4;
   text-align: center;
   opacity: 0;
-  transform: translateY(0.75rem);
-  transition:
-    opacity 250ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(0.5rem);
+  transition: opacity 200ms ease, transform 200ms ease;
   pointer-events: none;
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
 
   &.show {
     opacity: 1;
@@ -29,9 +25,9 @@
 
 @media (min-width: 640px) {
   .toast {
-    inset-inline: auto;
+    left: auto;
     right: 1.5rem;
-    bottom: max(1.5rem, env(safe-area-inset-bottom));
+    bottom: 1.5rem;
     margin-inline: 0;
     text-align: left;
   }

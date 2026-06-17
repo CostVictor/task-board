@@ -1,5 +1,4 @@
 :root {
-  /* Colors */
   --bg-main: #eef2f7;
   --bg-surface: #ffffff;
   --bg-muted: #f1f5f9;
@@ -9,7 +8,6 @@
   --border-strong: #cbd5e1;
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
-  --accent-soft: #dbeafe;
   --accent-ring: rgba(37, 99, 235, 0.28);
   --danger: #dc2626;
   --danger-soft: #fee2e2;
@@ -20,16 +18,12 @@
   --sidebar-hover: rgba(255, 255, 255, 0.07);
   --sidebar-active: #2563eb;
   --sidebar-input-bg: rgba(15, 23, 42, 0.82);
-
-  /* Status */
   --status-todo: #1d4ed8;
   --status-todo-bg: #dbeafe;
   --status-doing: #c2410c;
   --status-doing-bg: #ffedd5;
   --status-done: #15803d;
   --status-done-bg: #dcfce7;
-
-  /* Priority */
   --priority-high: #dc2626;
   --priority-high-bg: #fee2e2;
   --priority-medium: #b45309;
@@ -46,30 +40,16 @@
   padding: 0;
 }
 
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
 body {
-  font-family:
-    "Segoe UI",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 30rem),
-    var(--bg-main);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg-main);
   color: var(--text-primary);
   min-height: 100dvh;
   line-height: 1.5;
-  -webkit-tap-highlight-color: transparent;
 }
 
 body.sidebar-lock {
   overflow: hidden;
-  touch-action: none;
 }
 
 button {
@@ -77,26 +57,16 @@ button {
   cursor: pointer;
 }
 
-select,
-input {
+input,
+select {
   font: inherit;
   color: inherit;
-}
-
-select,
-input {
   width: 100%;
   min-height: 2.75rem;
   padding: 0.625rem 0.875rem;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   background: var(--bg-surface);
-  color: var(--text-primary);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
-  transition:
-    border-color 150ms,
-    box-shadow 150ms,
-    background 150ms;
 
   &::placeholder {
     color: var(--text-secondary);
@@ -106,22 +76,10 @@ input {
     outline: 2px solid var(--accent-ring);
     outline-offset: 1px;
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
   }
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  font-size: 0.875rem;
 }
