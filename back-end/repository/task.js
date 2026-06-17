@@ -27,22 +27,6 @@ export class TaskRepository {
     }
   }
 
-  async getTaskById(id) {
-    try {
-      const sql = `
-        SELECT t.id, t.project_id, t.title, t.description, t.status, t.priority, t.created_at,
-               p.name AS project_name
-        FROM tasks t
-        INNER JOIN projects p ON p.id = t.project_id
-        WHERE t.id = $1
-      `;
-      const result = await this.database.query(sql, [id]);
-      return result.rows;
-    } catch (erro) {
-      return { error: erro.message };
-    }
-  }
-
   async createTask(data) {
     try {
       const sql = `

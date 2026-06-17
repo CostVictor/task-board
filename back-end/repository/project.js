@@ -20,23 +20,6 @@ export class ProjectRepository {
     }
   }
 
-  async getProjectById(id) {
-    try {
-      const sql = `
-        SELECT p.id, p.name, p.description,
-               COUNT(t.id)::INT AS task_count
-        FROM projects p
-        LEFT JOIN tasks t ON t.project_id = p.id
-        WHERE p.id = $1
-        GROUP BY p.id, p.name, p.description
-      `;
-      const result = await this.database.query(sql, [id]);
-      return result.rows;
-    } catch (erro) {
-      return { error: erro.message };
-    }
-  }
-
   async createProject(data) {
     try {
       const sql = `

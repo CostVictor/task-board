@@ -2,11 +2,9 @@
   /* Colors */
   --bg-main: #eef2f7;
   --bg-surface: #ffffff;
-  --bg-soft: #f8fafc;
   --bg-muted: #f1f5f9;
   --text-primary: #0f172a;
   --text-secondary: #475569;
-  --text-muted: #64748b;
   --border: #dbe3ef;
   --border-strong: #cbd5e1;
   --accent: #2563eb;
@@ -14,10 +12,8 @@
   --accent-soft: #dbeafe;
   --accent-ring: rgba(37, 99, 235, 0.28);
   --danger: #dc2626;
-  --danger-hover: #b91c1c;
   --danger-soft: #fee2e2;
   --sidebar-bg: #0f172a;
-  --sidebar-surface: #111c31;
   --sidebar-border: rgba(148, 163, 184, 0.2);
   --sidebar-text: #e2e8f0;
   --sidebar-muted: #94a3b8;
@@ -76,20 +72,13 @@ body.sidebar-lock {
   touch-action: none;
 }
 
-img,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
 button {
   font: inherit;
   cursor: pointer;
 }
 
 select,
-input,
-textarea {
+input {
   font: inherit;
   color: inherit;
 }

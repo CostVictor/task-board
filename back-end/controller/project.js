@@ -10,16 +10,6 @@ export async function getProjects(_, response) {
   response.status(200).json(result);
 }
 
-export async function getProjectById(request, response) {
-  const result = await projectRepo.getProjectById(request.params.id);
-  if (result.error) return response.status(500).json({ error: result.error });
-
-  if (result.length === 0)
-    return response.status(404).json({ error: "Projeto não encontrado." });
-
-  response.status(200).json(result[0]);
-}
-
 // -- INSERT
 
 export async function createProject(request, response) {

@@ -18,16 +18,6 @@ export async function getTasks(request, response) {
   response.status(200).json(result);
 }
 
-export async function getTaskById(request, response) {
-  const result = await taskRepo.getTaskById(request.params.id);
-  if (result.error) return response.status(500).json({ error: result.error });
-
-  if (result.length === 0)
-    return response.status(404).json({ error: "Tarefa não encontrada." });
-
-  response.status(200).json(result[0]);
-}
-
 // -- INSERT
 
 export async function createTask(request, response) {
