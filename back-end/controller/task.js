@@ -8,6 +8,12 @@ const VALID_PRIORITY = ["low", "medium", "high"];
 export async function getTasks(request, response) {
   const { project_id } = request.query;
 
+  if (!project_id) {
+    return response
+      .status(400)
+      .json({ error: "ID do projeto é obrigatório." });
+  }
+
   const result = await taskRepo.getTasks(project_id);
   if (result.error) return response.status(500).json({ error: result.error });
 
@@ -43,21 +49,13 @@ export async function createTask(request, response) {
 // -- UPDATE
 
 export async function updateTask(request, response) {
-  const { status, title, description, priority } = request.body;
+  const { status } = request.body;
 
-  if (status && !VALID_STATUS.includes(status)) {
+  if (!status || !VALID_STATUS.includes(status)) {
     return response.status(400).json({ error: "Status inválido." });
   }
-  if (priority && !VALID_PRIORITY.includes(priority)) {
-    return response.status(400).json({ error: "Prioridade inválida." });
-  }
 
-  const result = await taskRepo.updateTask(request.params.id, {
-    status,
-    title,
-    description,
-    priority,
-  });
+  const result = await taskRepo.updateTask(request.params.id, status);
   if (result.error) return response.status(500).json({ error: result.error });
 
   if (result.length === 0)
@@ -75,5 +73,5 @@ export async function deleteTask(request, response) {
   if (result.length === 0)
     return response.status(404).json({ error: "Tarefa não encontrada." });
 
-  response.status(200).json({ message: "Tarefa removida." });
+  response.status(204).send();
 }

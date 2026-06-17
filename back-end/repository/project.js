@@ -39,18 +39,16 @@ export class ProjectRepository {
 
   async updateProject(id, data) {
     try {
-      // Em casos de PATCH, apenas os dados passados são atualizados.
-      // Os outros dados permanecem como já estavam no banco.
       const sql = `
         UPDATE projects
-        SET name = COALESCE($1, name),
-            description = COALESCE($2, description)
+        SET name = $1,
+            description = $2
         WHERE id = $3
         RETURNING id, name, description
       `;
       const result = await this.database.query(sql, [
-        data.name ?? null,
-        data.description ?? null,
+        data.name,
+        data.description || null,
         id,
       ]);
       return result.rows;

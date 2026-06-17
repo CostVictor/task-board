@@ -6,13 +6,13 @@ export class TaskRepository {
   async getTasks(projectId) {
     try {
       const sql = `
-        SELECT id, project_id, title, description, status, priority, created_at
+        SELECT id, title, description, status, priority
         FROM tasks
-        WHERE ($1::INT IS NULL OR project_id = $1)
+        WHERE project_id = $1
         ORDER BY created_at
       `;
 
-      const result = await this.database.query(sql, [projectId || null]);
+      const result = await this.database.query(sql, [projectId]);
       return result.rows;
     } catch (erro) {
       return { error: erro.message };
@@ -24,7 +24,7 @@ export class TaskRepository {
       const sql = `
         INSERT INTO tasks (project_id, title, description, priority)
         VALUES ($1, $2, $3, $4)
-        RETURNING id, project_id, title, description, status, priority, created_at
+        RETURNING id, title, description, status, priority
       `;
       const result = await this.database.query(sql, [
         data.project_id,
@@ -38,26 +38,15 @@ export class TaskRepository {
     }
   }
 
-  async updateTask(id, data) {
-    // Em casos de PATCH, apenas os dados passados são atualizados.
-    // Os outros dados permanecem como já estavam no banco.
+  async updateTask(id, status) {
     try {
       const sql = `
         UPDATE tasks
-        SET title = COALESCE($1, title),
-            description = COALESCE($2, description),
-            status = COALESCE($3, status),
-            priority = COALESCE($4, priority)
-        WHERE id = $5
-        RETURNING id, project_id, title, description, status, priority, created_at
+        SET status = $1
+        WHERE id = $2
+        RETURNING id, title, description, status, priority
       `;
-      const result = await this.database.query(sql, [
-        data.title ?? null,
-        data.description ?? null,
-        data.status ?? null,
-        data.priority ?? null,
-        id,
-      ]);
+      const result = await this.database.query(sql, [status, id]);
       return result.rows;
     } catch (erro) {
       return { error: erro.message };
