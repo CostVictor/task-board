@@ -12,21 +12,21 @@
   <body>
     <div class="app-layout">
       <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
+        <header class="sidebar-brand">
           <h1>TaskBoard</h1>
           <p class="subtitle">Kanban de tarefas</p>
-        </div>
+        </header>
 
-        <nav class="project-nav">
-          <p class="nav-label">Projetos</p>
-          <div class="project-search">
+        <nav class="project-nav" aria-label="Projetos">
+          <h2 class="nav-label">Projetos</h2>
+          <search class="project-search">
             <input
               type="search"
               id="projectSearch"
               placeholder="Buscar projeto"
               aria-label="Buscar projeto"
             />
-          </div>
+          </search>
           <ul class="project-list" id="projectList"></ul>
         </nav>
 
@@ -50,13 +50,15 @@
 
       <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-      <div class="content">
+      <main class="content">
         <header class="content-header">
           <button
             class="menu-toggle"
             id="menuToggle"
             type="button"
             aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="sidebar"
           >
             <span></span>
             <span></span>
@@ -69,18 +71,26 @@
         </header>
 
         <div class="content-body">
-          <div class="empty-state" id="emptyState">
-            <div class="empty-state-icon">📋</div>
-            <h3>Nenhum projeto selecionado</h3>
+          <section
+            class="empty-state"
+            id="emptyState"
+            aria-labelledby="empty-state-title"
+          >
+            <span class="empty-state-icon" aria-hidden="true">📋</span>
+            <h2 id="empty-state-title">Nenhum projeto selecionado</h2>
             <p>
               Escolha um projeto no menu lateral ou crie um novo para ver as
               tarefas.
             </p>
-          </div>
+          </section>
 
-          <div class="project-view hidden" id="projectView">
-            <section class="new-task">
-              <h2>Nova tarefa</h2>
+          <section
+            class="project-view hidden"
+            id="projectView"
+            aria-label="Projeto selecionado"
+          >
+            <section class="new-task" aria-labelledby="new-task-title">
+              <h2 id="new-task-title">Nova tarefa</h2>
               <form id="taskForm">
                 <input
                   type="text"
@@ -104,28 +114,40 @@
               </form>
             </section>
 
-            <section class="stats" id="stats"></section>
+            <ul class="stats" id="stats" aria-label="Resumo das tarefas"></ul>
 
-            <main class="board-grid">
-              <div class="column" data-status="todo">
-                <h2>A Fazer</h2>
-                <div class="column-content" id="column-todo"></div>
-              </div>
-              <div class="column" data-status="doing">
-                <h2>Fazendo</h2>
-                <div class="column-content" id="column-doing"></div>
-              </div>
-              <div class="column" data-status="done">
-                <h2>Concluído</h2>
-                <div class="column-content" id="column-done"></div>
-              </div>
-            </main>
-          </div>
+            <section class="board-grid" aria-label="Quadro de tarefas">
+              <section
+                class="column"
+                data-status="todo"
+                aria-labelledby="heading-todo"
+              >
+                <h2 id="heading-todo">A Fazer</h2>
+                <ul class="column-content" id="column-todo"></ul>
+              </section>
+              <section
+                class="column"
+                data-status="doing"
+                aria-labelledby="heading-doing"
+              >
+                <h2 id="heading-doing">Fazendo</h2>
+                <ul class="column-content" id="column-doing"></ul>
+              </section>
+              <section
+                class="column"
+                data-status="done"
+                aria-labelledby="heading-done"
+              >
+                <h2 id="heading-done">Concluído</h2>
+                <ul class="column-content" id="column-done"></ul>
+              </section>
+            </section>
+          </section>
         </div>
-      </div>
+      </main>
     </div>
 
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script type="module" src="./main.js"></script>
   </body>

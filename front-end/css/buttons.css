@@ -9,7 +9,9 @@
   font-size: 0.8125rem;
   font-weight: 600;
   white-space: nowrap;
-  transition: background 150ms, color 150ms;
+  transition:
+    background 150ms,
+    color 150ms;
 
   &:focus-visible {
     outline: 2px solid var(--accent-ring);
@@ -40,20 +42,6 @@
 
   &-block {
     width: 100%;
-  }
-
-  &-delete {
-    background: transparent;
-    border: none;
-    font-size: 1.125rem;
-    color: var(--text-secondary);
-    line-height: 1;
-
-    &:hover,
-    &:active {
-      color: var(--danger);
-      background: transparent;
-    }
   }
 }
 

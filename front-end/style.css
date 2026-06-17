@@ -7,4 +7,7 @@
 @import url("css/buttons.css");
 @import url("css/forms.css");
 @import url("css/toast.css");
-@import url("css/utilities.css");
+
+.hidden {
+  display: none !important;
+}

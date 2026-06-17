@@ -1,32 +1,28 @@
+import { initSidebar } from "./js/sidebar.js";
 import {
+  initProjectSearch,
   loadProjects,
   createProject,
-  deleteProject,
+  selectProject,
   startEditProject,
   cancelEditProject,
   saveProject,
-  selectProject,
-  initSidebar,
+  deleteProject,
 } from "./js/project.js";
 import { createTask, moveTask, deleteTask } from "./js/task.js";
 
-window.deleteProject = deleteProject;
+// Handlers expostos para onclick inline no HTML gerado
+window.selectProject = selectProject;
 window.startEditProject = startEditProject;
 window.cancelEditProject = cancelEditProject;
 window.saveProject = saveProject;
-window.selectProject = selectProject;
+window.deleteProject = deleteProject;
 window.moveTask = moveTask;
 window.deleteTask = deleteTask;
 
+document.getElementById("projectForm").addEventListener("submit", createProject);
 document.getElementById("taskForm").addEventListener("submit", createTask);
-document
-  .getElementById("projectForm")
-  .addEventListener("submit", createProject);
 
 initSidebar();
-
-async function init() {
-  await loadProjects();
-}
-
-init();
+initProjectSearch();
+loadProjects();

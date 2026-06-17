@@ -34,49 +34,6 @@ export async function loadTasks() {
 
 // -- RENDER
 
-function renderStats() {
-  const counts = { todo: 0, doing: 0, done: 0 };
-
-  for (const task of state.tasks) {
-    if (counts[task.status] !== undefined) {
-      counts[task.status]++;
-    }
-  }
-
-  document.getElementById("stats").innerHTML = `
-    <span class="stat stat-todo">${counts.todo} a fazer</span>
-    <span class="stat stat-doing">${counts.doing} fazendo</span>
-    <span class="stat stat-done">${counts.done} concluídas</span>
-  `;
-}
-
-function renderBoard() {
-  const columns = {
-    todo: document.getElementById("column-todo"),
-    doing: document.getElementById("column-doing"),
-    done: document.getElementById("column-done"),
-  };
-
-  for (const key of Object.keys(columns)) {
-    columns[key].innerHTML = "";
-  }
-
-  for (const task of state.tasks) {
-    if (!columns[task.status]) continue;
-
-    const card = createTaskCard(task);
-    columns[task.status].appendChild(card);
-  }
-
-  for (const key of Object.keys(columns)) {
-    if (columns[key].children.length === 0) {
-      columns[key].innerHTML = '<p class="empty">Nenhuma tarefa</p>';
-    }
-  }
-}
-
-// -- ACTIONS
-
 function createTaskCard(task) {
   const card = document.createElement("article");
   const priority = PRIORITY_LABELS[task.priority] ? task.priority : "medium";
@@ -95,16 +52,92 @@ function createTaskCard(task) {
   }
 
   card.innerHTML = `
-    <div class="card-header">
+    <header class="card-header">
       <span class="badge priority-${priority}">${PRIORITY_LABELS[priority]}</span>
-      <button class="btn-delete" onclick="deleteTask(${task.id})" title="Excluir">&times;</button>
-    </div>
+      <button type="button" class="btn-delete" onclick="deleteTask(${task.id})" aria-label="Excluir tarefa">&times;</button>
+    </header>
     <h3>${escapeHtml(task.title)}</h3>
     ${task.description ? `<p>${escapeHtml(task.description)}</p>` : ""}
-    <div class="card-actions">${actions}</div>
+    <footer class="card-actions">${actions}</footer>
   `;
 
   return card;
+}
+
+function renderBoard() {
+  const columns = {
+    todo: document.getElementById("column-todo"),
+    doing: document.getElementById("column-doing"),
+    done: document.getElementById("column-done"),
+  };
+
+  for (const key of Object.keys(columns)) {
+    columns[key].innerHTML = "";
+  }
+
+  for (const task of state.tasks) {
+    if (!columns[task.status]) continue;
+
+    const item = document.createElement("li");
+    item.appendChild(createTaskCard(task));
+    columns[task.status].appendChild(item);
+  }
+
+  for (const key of Object.keys(columns)) {
+    if (columns[key].children.length === 0) {
+      columns[key].innerHTML = '<li class="empty">Nenhuma tarefa</li>';
+    }
+  }
+}
+
+function renderStats() {
+  const counts = { todo: 0, doing: 0, done: 0 };
+
+  for (const task of state.tasks) {
+    if (counts[task.status] !== undefined) {
+      counts[task.status]++;
+    }
+  }
+
+  document.getElementById("stats").innerHTML = `
+    <li class="stat stat-todo">${counts.todo} a fazer</li>
+    <li class="stat stat-doing">${counts.doing} fazendo</li>
+    <li class="stat stat-done">${counts.done} concluídas</li>
+  `;
+}
+
+// -- ACTIONS
+
+export async function createTask(event) {
+  event.preventDefault();
+
+  if (!state.selectedProjectId) {
+    showToast("Selecione um projeto primeiro");
+    return;
+  }
+
+  const title = document.getElementById("taskTitle").value.trim();
+  const description = document.getElementById("taskDescription").value.trim();
+  const project_id = state.selectedProjectId;
+  const priority = document.getElementById("taskPriority").value;
+
+  const response = await fetch(`${API_URL}/tasks`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, description, project_id, priority }),
+  });
+
+  if (!response.ok) {
+    showToast("Erro ao criar tarefa");
+    return;
+  }
+
+  document.getElementById("taskForm").reset();
+  document.getElementById("taskPriority").value = "medium";
+
+  showToast("Tarefa criada");
+  await loadProjects();
+  await loadTasks();
 }
 
 export async function moveTask(id, status) {
@@ -137,38 +170,6 @@ export async function deleteTask(id) {
   }
 
   showToast("Tarefa excluída");
-  await loadProjects();
-  await loadTasks();
-}
-
-export async function createTask(event) {
-  event.preventDefault();
-
-  if (!state.selectedProjectId) {
-    showToast("Selecione um projeto primeiro");
-    return;
-  }
-
-  const title = document.getElementById("taskTitle").value.trim();
-  const description = document.getElementById("taskDescription").value.trim();
-  const project_id = state.selectedProjectId;
-  const priority = document.getElementById("taskPriority").value;
-
-  const response = await fetch(`${API_URL}/tasks`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title, description, project_id, priority }),
-  });
-
-  if (!response.ok) {
-    showToast("Erro ao criar tarefa");
-    return;
-  }
-
-  document.getElementById("taskForm").reset();
-  document.getElementById("taskPriority").value = "medium";
-
-  showToast("Tarefa criada");
   await loadProjects();
   await loadTasks();
 }
