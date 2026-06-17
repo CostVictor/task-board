@@ -2,7 +2,10 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>TaskBoard</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -16,6 +19,14 @@
 
         <nav class="project-nav">
           <p class="nav-label">Projetos</p>
+          <div class="project-search">
+            <input
+              type="search"
+              id="projectSearch"
+              placeholder="Buscar projeto"
+              aria-label="Buscar projeto"
+            />
+          </div>
           <ul class="project-list" id="projectList"></ul>
         </nav>
 
@@ -31,7 +42,9 @@
             id="projectDescription"
             placeholder="Descrição (opcional)"
           />
-          <button type="submit">+ Criar projeto</button>
+          <button type="submit" class="btn btn-primary btn-block">
+            + Criar projeto
+          </button>
         </form>
       </aside>
 
@@ -66,23 +79,6 @@
           </div>
 
           <div class="project-view hidden" id="projectView">
-            <section class="stats" id="stats"></section>
-
-            <main class="board">
-              <div class="column" data-status="todo">
-                <h2>A Fazer</h2>
-                <div class="column-content" id="column-todo"></div>
-              </div>
-              <div class="column" data-status="doing">
-                <h2>Fazendo</h2>
-                <div class="column-content" id="column-doing"></div>
-              </div>
-              <div class="column" data-status="done">
-                <h2>Concluído</h2>
-                <div class="column-content" id="column-done"></div>
-              </div>
-            </main>
-
             <section class="new-task">
               <h2>Nova tarefa</h2>
               <form id="taskForm">
@@ -102,9 +98,28 @@
                   <option value="medium" selected>Média</option>
                   <option value="high">Alta</option>
                 </select>
-                <button type="submit">Criar tarefa</button>
+                <button type="submit" class="btn btn-primary">
+                  Criar tarefa
+                </button>
               </form>
             </section>
+
+            <section class="stats" id="stats"></section>
+
+            <main class="board board-grid">
+              <div class="column" data-status="todo">
+                <h2>A Fazer</h2>
+                <div class="column-content" id="column-todo"></div>
+              </div>
+              <div class="column" data-status="doing">
+                <h2>Fazendo</h2>
+                <div class="column-content" id="column-doing"></div>
+              </div>
+              <div class="column" data-status="done">
+                <h2>Concluído</h2>
+                <div class="column-content" id="column-done"></div>
+              </div>
+            </main>
           </div>
         </div>
       </div>

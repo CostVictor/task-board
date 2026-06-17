@@ -1,72 +1,100 @@
 .card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
   background: var(--bg-surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-  border-left: 4px solid #94a3b8;
-  transition: box-shadow 0.15s;
+  border-radius: 0.75rem;
+  border-left: 4px solid var(--priority-low);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition:
+    box-shadow 150ms,
+    transform 150ms;
 
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+      transform: translateY(-1px);
+    }
   }
 
   &.priority-high {
-    border-left-color: #ef4444;
+    border-left-color: var(--priority-high);
   }
 
   &.priority-medium {
-    border-left-color: #f59e0b;
+    border-left-color: var(--priority-medium);
   }
 
   &.priority-low {
-    border-left-color: #94a3b8;
+    border-left-color: var(--priority-low);
   }
 
   h3 {
-    font-size: 1rem;
-    margin-bottom: 6px;
+    font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+    line-height: 1.35;
+    word-break: break-word;
   }
 
   p {
     font-size: 0.875rem;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    line-height: 1.5;
+    word-break: break-word;
   }
 
   &-header {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+    gap: 0.5rem;
   }
 
   &-actions {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+
+    .btn {
+      flex: 1 1 auto;
+      min-width: fit-content;
+    }
   }
 }
 
 .badge {
-  font-size: 0.7rem;
-  padding: 2px 8px;
+  flex-shrink: 0;
+  padding: 0.25rem 0.5rem;
   border-radius: 999px;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 
   &.priority-high {
-    background: #fee2e2;
-    color: #b91c1c;
+    background: var(--priority-high-bg);
+    color: var(--priority-high);
   }
 
   &.priority-medium {
-    background: #fef3c7;
-    color: #b45309;
+    background: var(--priority-medium-bg);
+    color: var(--priority-medium);
   }
 
   &.priority-low {
-    background: #f1f5f9;
-    color: #64748b;
+    background: var(--priority-low-bg);
+    color: var(--priority-low);
   }
+}
 
+@media (max-width: 639px) {
+  .card .card-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
 }

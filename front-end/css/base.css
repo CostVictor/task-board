@@ -1,57 +1,138 @@
 :root {
-  --bg-main: #f1f5f9;
+  /* Colors */
+  --bg-main: #eef2f7;
   --bg-surface: #ffffff;
-  --bg-muted: #f8fafc;
+  --bg-soft: #f8fafc;
+  --bg-muted: #f1f5f9;
   --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --border: #e2e8f0;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border: #dbe3ef;
+  --border-strong: #cbd5e1;
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
-  --sidebar-bg: #1e293b;
-  --sidebar-border: #334155;
+  --accent-soft: #dbeafe;
+  --accent-ring: rgba(37, 99, 235, 0.28);
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-soft: #fee2e2;
+  --sidebar-bg: #0f172a;
+  --sidebar-surface: #111c31;
+  --sidebar-border: rgba(148, 163, 184, 0.2);
   --sidebar-text: #e2e8f0;
   --sidebar-muted: #94a3b8;
-  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-hover: rgba(255, 255, 255, 0.07);
   --sidebar-active: #2563eb;
-  --sidebar-input-bg: #0f172a;
+  --sidebar-input-bg: rgba(15, 23, 42, 0.82);
+
+  /* Status */
+  --status-todo: #1d4ed8;
+  --status-todo-bg: #dbeafe;
+  --status-doing: #c2410c;
+  --status-doing-bg: #ffedd5;
+  --status-done: #15803d;
+  --status-done-bg: #dcfce7;
+
+  /* Priority */
+  --priority-high: #dc2626;
+  --priority-high-bg: #fee2e2;
+  --priority-medium: #b45309;
+  --priority-medium-bg: #fef3c7;
+  --priority-low: #64748b;
+  --priority-low-bg: #f1f5f9;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  background: var(--bg-main);
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 30rem),
+    var(--bg-main);
   color: var(--text-primary);
-  min-height: 100vh;
+  min-height: 100dvh;
   line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.sidebar-lock {
+  overflow: hidden;
+  touch-action: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
 }
 
 select,
 input,
-button {
+textarea {
   font: inherit;
+  color: inherit;
 }
 
 select,
 input {
-  padding: 8px 12px;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: var(--bg-surface);
   color: var(--text-primary);
-  transition: border-color 0.15s;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition:
+    border-color 150ms,
+    box-shadow 150ms,
+    background 150ms;
 
-  &:focus {
-    outline: none;
+  &::placeholder {
+    color: var(--text-secondary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-ring);
+    outline-offset: 1px;
     border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
   }
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

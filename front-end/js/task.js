@@ -5,7 +5,7 @@ import {
   STATUS_FLOW,
 } from "./config.js";
 import { state } from "./state.js";
-import { showToast } from "./utils.js";
+import { escapeHtml, showToast } from "./utils.js";
 import { loadProjects } from "./project.js";
 
 // -- LOAD
@@ -13,22 +13,34 @@ import { loadProjects } from "./project.js";
 export async function loadTasks() {
   if (!state.selectedProjectId) {
     state.tasks = [];
+    renderBoard();
+    renderStats();
     return;
   }
 
   const url = `${API_URL}/tasks?project_id=${state.selectedProjectId}`;
   const response = await fetch(url);
+
+  if (!response.ok) {
+    showToast("Erro ao carregar tarefas");
+    return;
+  }
+
   state.tasks = await response.json();
 
   renderBoard();
   renderStats();
 }
 
+// -- RENDER
+
 function renderStats() {
   const counts = { todo: 0, doing: 0, done: 0 };
 
   for (const task of state.tasks) {
-    counts[task.status]++;
+    if (counts[task.status] !== undefined) {
+      counts[task.status]++;
+    }
   }
 
   document.getElementById("stats").innerHTML = `
@@ -37,8 +49,6 @@ function renderStats() {
     <span class="stat stat-done">${counts.done} concluídas</span>
   `;
 }
-
-// -- RENDER
 
 function renderBoard() {
   const columns = {
@@ -52,6 +62,8 @@ function renderBoard() {
   }
 
   for (const task of state.tasks) {
+    if (!columns[task.status]) continue;
+
     const card = createTaskCard(task);
     columns[task.status].appendChild(card);
   }
@@ -67,9 +79,11 @@ function renderBoard() {
 
 function createTaskCard(task) {
   const card = document.createElement("article");
-  card.classList.add("card", `priority-${task.priority}`);
+  const priority = PRIORITY_LABELS[task.priority] ? task.priority : "medium";
+  const flow = STATUS_FLOW[task.status] || {};
 
-  const flow = STATUS_FLOW[task.status];
+  card.classList.add("card", `priority-${priority}`);
+
   let actions = "";
 
   if (flow.prev) {
@@ -82,11 +96,11 @@ function createTaskCard(task) {
 
   card.innerHTML = `
     <div class="card-header">
-      <span class="badge priority-${task.priority}">${PRIORITY_LABELS[task.priority]}</span>
+      <span class="badge priority-${priority}">${PRIORITY_LABELS[priority]}</span>
       <button class="btn-delete" onclick="deleteTask(${task.id})" title="Excluir">&times;</button>
     </div>
-    <h3>${task.title}</h3>
-    ${task.description ? `<p>${task.description}</p>` : ""}
+    <h3>${escapeHtml(task.title)}</h3>
+    ${task.description ? `<p>${escapeHtml(task.description)}</p>` : ""}
     <div class="card-actions">${actions}</div>
   `;
 
