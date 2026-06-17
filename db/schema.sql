@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS taskboard;
+CREATE DATABASE taskboard; -- Crie o banco de dados separadamente
 
 CREATE TABLE IF NOT EXISTS projects (
   id SERIAL PRIMARY KEY,
@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS tasks (
   description TEXT,
   status VARCHAR(20) NOT NULL DEFAULT 'todo',
   priority VARCHAR(10) NOT NULL DEFAULT 'medium',
-  created_at TIMESTAMP NOT NULL DEFAULT NOW()
-  project_id INT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  project_id INT NOT NULL REFERENCES projects(id) ON DELETE CASCADE
 );
 
 INSERT INTO projects (name, description) VALUES
@@ -24,4 +24,4 @@ INSERT INTO tasks (project_id, title, description, status, priority) VALUES
   (1, 'Criar banco de dados', 'Executar schema.sql no PostgreSQL', 'done', 'high'),
   (1, 'Implementar API', 'Rotas, controller e repository', 'doing', 'high'),
   (1, 'Estilizar frontend', 'Layout Kanban responsivo', 'todo', 'medium'),
-  (2, 'Estudar para a prova do Marlos', "Conteúdo: Estrutura de dados Árvore", 'todo', 'high');
+  (2, 'Estudar para a prova do Marlos', 'Conteúdo: Estrutura de dados Árvore', 'todo', 'high');
