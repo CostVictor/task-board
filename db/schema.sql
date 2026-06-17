@@ -1,5 +1,3 @@
-CREATE DATABASE taskboard; -- Crie o banco de dados separadamente
-
 CREATE TABLE IF NOT EXISTS projects (
   id SERIAL PRIMARY KEY,
   name VARCHAR(80) NOT NULL,
@@ -24,6 +22,6 @@ INSERT INTO tasks (project_id, title, description, status, priority) VALUES
   (1, 'Criar banco de dados', 'Executar schema.sql no PostgreSQL', 'done', 'high'),
   (1, 'Implementar API', 'Rotas, controller e repository', 'done', 'high'),
   (1, 'Estilizar frontend', 'Layout Kanban responsivo', 'done', 'high'),
-  (1, 'Testar se o sistema está funcionando', null, 'todo', 'medium'),
-  (1, 'Dar um 10 para o trabalho', null, 'todo', 'high'),
+  (1, 'Testar se o sistema está funcionando', null, 'doing', 'medium'),
+  (1, 'Dar um 10 para o trabalho !!', 'Muito importante', 'todo', 'high'),
   (2, 'Estudar para a prova do Marlos', 'Conteúdo: Estrutura de dados Árvore', 'todo', 'high');
