@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS tasks (
 
 INSERT INTO projects (name, description) VALUES
   ('Trabalho WEB 1', 'Projeto full stack IFCE'),
-  ('Pessoal', 'Tarefas do dia a dia');
+  ('Estudos', 'Matérias e conteúdos para estudar');
 
 INSERT INTO tasks (project_id, title, description, status, priority) VALUES
   (1, 'Criar banco de dados', 'Executar schema.sql no PostgreSQL', 'done', 'high'),
@@ -24,4 +24,5 @@ INSERT INTO tasks (project_id, title, description, status, priority) VALUES
   (1, 'Estilizar frontend', 'Layout Kanban responsivo', 'done', 'high'),
   (1, 'Testar se o sistema está funcionando', null, 'doing', 'medium'),
   (1, 'Dar um 10 para o trabalho !!', 'Muito importante', 'todo', 'high'),
-  (2, 'Estudar para a prova do Marlos', 'Conteúdo: Estrutura de dados Árvore', 'todo', 'high');
+  (2, 'Estudar para a prova de Estrutura de Dados', 'Conteúdo: Árvore Binária de Busca', 'todo', 'high'),
+  (2, 'Estudar para a prova de Análise e Desenvolvimento de Sistemas', 'Conteúdo: Metodologias ágeis', 'todo', 'high');
