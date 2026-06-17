@@ -3,24 +3,16 @@ export class TaskRepository {
     this.database = database;
   }
 
-  async getTasks(status, projectId) {
+  async getTasks(projectId) {
     try {
-      // Filtra dinamicamente por status e/ou projectId.
-      // Se não for passado qualquer um dos filtros, retorna tudo.
       const sql = `
-        SELECT t.id, t.project_id, t.title, t.description, t.status, t.priority, t.created_at,
-               p.name AS project_name
-        FROM tasks t
-        INNER JOIN projects p ON p.id = t.project_id
-        WHERE ($1::VARCHAR IS NULL OR t.status = $1)
-          AND ($2::INT IS NULL OR t.project_id = $2)
-        ORDER BY t.created_at
+        SELECT id, project_id, title, description, status, priority, created_at
+        FROM tasks
+        WHERE ($1::INT IS NULL OR project_id = $1)
+        ORDER BY created_at
       `;
 
-      const result = await this.database.query(sql, [
-        status || null,
-        projectId || null,
-      ]);
+      const result = await this.database.query(sql, [projectId || null]);
       return result.rows;
     } catch (erro) {
       return { error: erro.message };

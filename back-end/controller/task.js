@@ -6,13 +6,9 @@ const VALID_PRIORITY = ["low", "medium", "high"];
 // -- SELECT
 
 export async function getTasks(request, response) {
-  const { status, project_id } = request.query;
+  const { project_id } = request.query;
 
-  if (status && !VALID_STATUS.includes(status)) {
-    return response.status(400).json({ error: "Status inválido." });
-  }
-
-  const result = await taskRepo.getTasks(status, project_id);
+  const result = await taskRepo.getTasks(project_id);
   if (result.error) return response.status(500).json({ error: result.error });
 
   response.status(200).json(result);
